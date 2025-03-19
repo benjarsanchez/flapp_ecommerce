@@ -29,7 +29,7 @@ export function Home() {
   const fetchRandomCart = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/api/cart/random');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/random`);
       if (!response.ok) throw new Error('Error al obtener el carrito');
       
       const data = await response.json();

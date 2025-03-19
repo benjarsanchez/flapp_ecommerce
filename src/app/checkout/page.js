@@ -66,7 +66,7 @@ export function Checkout() {
         },
       };
 
-      const response = await fetch('http://localhost:8000/api/cart', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
