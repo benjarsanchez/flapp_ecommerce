@@ -1,8 +1,16 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
-export default function Checkout() {
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Checkout />
+    </Suspense>
+  );
+}
+
+export function Checkout() {
   const [cart, setCart] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [quoteResult, setQuoteResult] = useState(null); // Estado para el resultado de la cotización

@@ -1,9 +1,17 @@
 'use client';
 import Button from './../components/button.js';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
-export default function Home() {
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Home />
+    </Suspense>
+  );
+}
+
+export function Home() {
   const [cart, setCart] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
