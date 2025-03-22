@@ -1,3 +1,5 @@
+Aplicacion hosteada en instancia EC2 de AWS: http://ec2-13-218-26-90.compute-1.amazonaws.com:3000
+
 Para ejecutar front localmente:
 
 1. npm install
