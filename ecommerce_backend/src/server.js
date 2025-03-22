@@ -1,8 +1,13 @@
 import express from 'express';
-import 'dotenv/config';
-import cartRoutes from './routes/cartRoutes.js';
-import { errorHandler } from './utils/errorHandler.js';
+import db from './config/db.js';
+import router from './routes/shortUrlRoutes.js';
+import { fileURLToPath } from 'url';
+import path from 'path';
 import cors from 'cors';
+
+// Configuración para obtener __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors({
@@ -11,10 +16,25 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
-app.use(cartRoutes);
-app.use(errorHandler);
+
+// Conexión a la base de datos
+try {
+  await db.authenticate();
+  await db.sync();
+  console.log('Conexión a PostgreSQL establecida');
+} catch (error) {
+  console.error('Error de conexión:', error);
+}
+
+// Rutas
+app.use('/api', router);
+
+// Frontend
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log(`Servidor ejecutándose en puerto ${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
